@@ -1,16 +1,15 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { voteAction } from '../reducers/anecdoteReducer'
+import { vote } from '../reducers/anecdoteReducer'
 
 const AnecdoteList = () => {
-  const anecdotes = useSelector(state => {
-    const filter = state.filter
-    return state.anecdotes.filter(ane => ane.content.toLowerCase().includes(filter))
+  const anecdotes = useSelector(({ filter, anecdotes }) => {
+    return anecdotes.filter(ane => ane.content.toLowerCase().includes(filter))
   })
 
   const dispatch = useDispatch()
 
-  const vote = (id) => {
-    dispatch(voteAction(id))
+  const handleVote = (id) => {
+    dispatch(vote(id))
   }
 
   const byVotes = (a, b) => b.votes - a.votes
@@ -23,7 +22,7 @@ const AnecdoteList = () => {
           </div>
           <div>
             has {anecdote.votes}
-            <button onClick={() => vote(anecdote.id)}>vote</button>
+            <button onClick={() => handleVote(anecdote.id)}>vote</button>
           </div>
         </div>
       )}
