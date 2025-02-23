@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux'
-import { create } from '../reducers/anecdoteReducer'
+import { saveToDBAndDispatch } from '../reducers/anecdoteReducer'
 import { displayMessage, hide } from '../reducers/notificationReducer'
 import anecdoteService from '../services/anecdote'
 
@@ -11,7 +11,7 @@ const AnecdoteForm = () => {
     const content = event.target.anecdoteInput.value
     event.target.anecdoteInput.value = ''
     await anecdoteService.createNew(content)
-    dispatch(create(content))
+    dispatch(saveToDBAndDispatch(content))
 
     dispatch(displayMessage(`you created "${content}"`))
     setTimeout(() => dispatch(hide()), 5000)

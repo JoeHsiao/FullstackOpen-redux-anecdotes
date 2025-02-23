@@ -45,5 +45,14 @@ export const fetchFromDBAndSetStore = () => {
   })
 }
 
+export const saveToDBAndDispatch = content => {
+  return (dispatch => {
+    anecdoteService.createNew(content)
+      .then(() => {
+        dispatch(create(content))
+      })
+  })
+}
+
 export const { vote, create, setAnecdotes } = anecdoteSlice.actions
 export default anecdoteSlice.reducer
