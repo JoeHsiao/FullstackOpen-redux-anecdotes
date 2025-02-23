@@ -1,6 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux'
+import { useEffect } from 'react'
 import { vote } from '../reducers/anecdoteReducer'
 import { displayMessage, hide } from '../reducers/notificationReducer'
+import anecdoteService from '../services/anecdote'
+import { setAnecdotes } from '../reducers/anecdoteReducer'
 
 const AnecdoteList = () => {
   const anecdotes = useSelector(state => state.anecdotes)
@@ -13,6 +16,13 @@ const AnecdoteList = () => {
     dispatch(displayMessage(`you voted "${content}"`))
     setTimeout(() => dispatch(hide()), 5000)
   }
+
+  useEffect(() => {
+    anecdoteService.getAll()
+      .then(anecdotes => {
+        dispatch(setAnecdotes(anecdotes))
+      })
+  }, [dispatch])
 
   const byVotes = (a, b) => b.votes - a.votes
   return (
