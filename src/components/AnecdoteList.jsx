@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { voteToDB } from '../reducers/anecdoteReducer'
-import { displayMessage, hide } from '../reducers/notificationReducer'
+import { setNotification } from '../reducers/notificationReducer'
 import { fetchFromDBAndSetStore } from '../reducers/anecdoteReducer'
 
 const AnecdoteList = () => {
@@ -13,8 +13,7 @@ const AnecdoteList = () => {
   const handleVote = (anecdote) => {
     dispatch(voteToDB(anecdote))
 
-    dispatch(displayMessage(`you voted "${anecdote.content}"`))
-    setTimeout(() => dispatch(hide()), 5000)
+    dispatch(setNotification(`you voted "${anecdote.content}"`, 5))
   }
 
   useEffect(() => {
